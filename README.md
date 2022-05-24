@@ -51,10 +51,10 @@
 ## 🔍Project Overview
 
 ## 👩‍🏫개발 환경
-GPU환경 : V100 서버, Google Cloud Platform(GCP) 서버
-팀 협력 Tools : Notion, Weights&Biases, Github, Google Drive, MLflow
-개발 Tools : VScode, Jupyter Lab
-라이브러리 및 프레임워크 : PyTorch, Streamlit
+- GPU환경 : V100 서버, Google Cloud Platform(GCP) 서버
+- 팀 협력 Tools : Notion, Weights&Biases, Github, Google Drive, MLflow
+- 개발 Tools : VScode, Jupyter Lab
+- 라이브러리 및 프레임워크 : PyTorch, Streamlit
 
 ## 👨‍🏫평가 Metric
 
