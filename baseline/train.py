@@ -324,8 +324,8 @@ if __name__ == '__main__':
     parser.add_argument('--key', type=str, default='wrinkle', help='choose category(hydration, oil, pigmentation, sensitive, wrinkle)')
 
     # Container environment
-    parser.add_argument('--train_dir', type=str, default=os.environ.get('SM_CHANNEL_TRAIN', '/opt/ml/naverboostcamp_dataset/combined_wrinkle_images_train'))
-    parser.add_argument('--valid_dir', type=str, default=os.environ.get('SM_CHANNEL_TRAIN', '/opt/ml/naverboostcamp_dataset/combined_wrinkle_images_val'))
+    parser.add_argument('--train_dir', type=str, default=os.environ.get('SM_CHANNEL_TRAIN', '/opt/ml/naverboostcamp_dataset/naverboostcamp_train/JPEGImages'))
+    parser.add_argument('--valid_dir', type=str, default=os.environ.get('SM_CHANNEL_TRAIN', '/opt/ml/naverboostcamp_dataset/naverboostcamp_val/JPEGImages'))
     parser.add_argument('--model_dir', type=str, default=os.environ.get('SM_MODEL_DIR', './model'))
 
     args = parser.parse_args()
