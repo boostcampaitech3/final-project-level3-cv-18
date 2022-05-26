@@ -29,6 +29,7 @@ import copy
 from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score
 from torch.utils.tensorboard import SummaryWriter
 from loss import create_criterion, eval_criterion
+from utils import Metric
 
 
 def seed_everything(seed):
@@ -217,8 +218,8 @@ def train(data_dir, model_dir, valid_dir, args):
         model.train()                                                     # model 학습 모드로 변경한다.
         train_accuracy = 0                                                # 해당 epoch의 accuracy와 loss를 저장할 변수 선언한다.
         train_loss = 0                        
-        train_precision, train_recall, train_f1 = 0, 0, 0
-        
+        # train_precision, train_recall, train_f1 = 0, 0, 0
+        metric = Metric()
         for images, labels in tqdm(train_loader):   
             images = images.to(device)
             labels = labels.to(device)
@@ -235,10 +236,14 @@ def train(data_dir, model_dir, valid_dir, args):
             train_accuracy += correct.sum().item() / total_train_image      # accuracy 값을 갱신한다.
             train_loss += loss.item() / total_train_batch                   # loss 값을 갱신한다.
             
-            precision, recall, f1 = eval_criterion(hypothesis, labels)
-            train_precision += precision / total_train_batch
-            train_recall += recall / total_train_batch
-            train_f1 += f1 / total_train_batch
+            metric.add_data(hypothesis, labels)
+
+            # precision, recall, f1 = eval_criterion(hypothesis, labels)
+            # train_precision += precision / total_train_batch
+            # train_recall += recall / total_train_batch
+            # train_f1 += f1 / total_train_batch
+        
+        train_precision, train_recall, train_f1 = metric.calculate()
             
             
         # wandb.log({
@@ -252,10 +257,11 @@ def train(data_dir, model_dir, valid_dir, args):
 
         val_accuracy = 0
         val_loss = 0
-        valid_precision, valid_recall, valid_f1 = 0, 0, 0
+        # valid_precision, valid_recall, valid_f1 = 0, 0, 0
 
         with torch.no_grad():
             model.eval()
+            metric = Metric()
             for images, labels in tqdm(valid_loader):
                 images = images.to(device)
                 labels = labels.to(device)
@@ -265,11 +271,15 @@ def train(data_dir, model_dir, valid_dir, args):
                 correct = (torch.argmax(prediction, 1) == labels)
                 val_accuracy += correct.sum().item() / total_val_image
                 val_loss += loss.item() / total_val_batch
+
+                metric.add_data(prediction, labels)
                 
-                precision, recall, f1 = eval_criterion(prediction, labels)
-                valid_precision += precision / total_val_batch
-                valid_recall += recall / total_val_batch
-                valid_f1 += f1 / total_val_batch
+                # precision, recall, f1 = eval_criterion(prediction, labels)
+                # valid_precision += precision / total_val_batch
+                # valid_recall += recall / total_val_batch
+                # valid_f1 += f1 / total_val_batch
+            
+            valid_precision, valid_recall, valid_f1 = metric.calculate()
                 
             #베스트 모델 저장 
             if best_acc < val_accuracy:
