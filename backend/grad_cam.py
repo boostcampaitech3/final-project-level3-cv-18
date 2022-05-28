@@ -37,8 +37,10 @@ class FeatureExtractor():
         return outputs, x
 
 def preprocess_image(img):
-    means = [0.485, 0.456, 0.406]
-    stds = [0.229, 0.224, 0.225]
+    # means = [0.485, 0.456, 0.406]
+    # stds = [0.229, 0.224, 0.225]
+    means = [0.5, 0.5, 0.5]
+    stds = [0.2, 0.2, 0.2]
 
     preprocessed_img = img.copy()[:, :, ::-1]
     for i in range(3):
@@ -65,7 +67,7 @@ def show_cam_on_image(img, mask, name):
     return np.uint8(255 * cam)
 
 class GradCam:
-    def __init__(self, model, blob_name, target_layer_names, use_cuda):
+    def __init__(self, model, blob_name, target_layer_names, use_cuda, img_size):
         self.model = model
         self.target_layer_names = target_layer_names
         self.model.eval()
@@ -73,6 +75,7 @@ class GradCam:
         if self.cuda:
             self.model = model.cuda()
         self.extractor = FeatureExtractor(self.model, blob_name, target_layer_names)
+        self.img_size = img_size
 
     def __call__(self, inputs, index=None):
         cam_dic = {}
@@ -102,7 +105,7 @@ class GradCam:
             for i, w in enumerate(weights):
                 cam += w * target[i, :, :]
             cam = np.maximum(cam, 0)
-            cam = cv2.resize(cam, (512, 512))                                                    # 이미지 Resize
+            cam = cv2.resize(cam, self.img_size)
             cam = cam - np.min(cam)
             cam = cam / np.max(cam)
             cam_dic[self.target_layer_names[idx]] = cam
