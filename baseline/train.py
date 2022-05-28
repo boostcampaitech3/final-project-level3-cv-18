@@ -243,7 +243,9 @@ def train(data_dir, model_dir, valid_dir, args):
             # train_recall += recall / total_train_batch
             # train_f1 += f1 / total_train_batch
         
-        train_precision, train_recall, train_f1 = metric.calculate()
+        train_recall = metric.get_recall()
+        train_wrecall = metric.get_w_recall()
+        train_precall = metric.get_p_recall()
             
             
         # wandb.log({
@@ -279,8 +281,11 @@ def train(data_dir, model_dir, valid_dir, args):
                 # valid_recall += recall / total_val_batch
                 # valid_f1 += f1 / total_val_batch
             
-            valid_precision, valid_recall, valid_f1 = metric.calculate()
+            valid_recall = metric.get_recall()
+            valid_wrecall = metric.get_w_recall()
+            valid_precall = metric.get_p_recall()
                 
+            
             #베스트 모델 저장 
             if best_acc < val_accuracy:
                 best_acc = val_accuracy
@@ -294,14 +299,14 @@ def train(data_dir, model_dir, valid_dir, args):
             # wandb.log({
             #     "val_loss": val_loss,
             #     "val_accuracy": val_accuracy,
-            #     "valid_precision": valid_precision,
             #     "valid_recall": valid_recall,
-            #     "valid_f1": valid_f1
+            #     "valid_w_recall": valid_precall,
+            #     "valid_p_recall": valid_wrecall
             # })
             
         print(f'[epoch {epoch+1}/{args.epochs}] train_loss: {train_loss:.5} train_accuracy: {train_accuracy:.5} val_loss: {val_loss:.5} val_accuracy: {val_accuracy:.5}')
-        print(f'[epoch {epoch+1}/{args.epochs}] train_precision: {train_precision:.5} train_recall: {train_recall:.5} train_f1: {train_f1:.5}')
-        print(f'[epoch {epoch+1}/{args.epochs}] valid_precision: {valid_precision:.5} valid_recall: {valid_recall:.5} valid_f1: {valid_f1:.5}')
+        print(f'[epoch {epoch+1}/{args.epochs}] train_recall: {train_recall:.5} train_wrecall: {train_wrecall:.5} train_precall: {train_precall:.5}')
+        print(f'[epoch {epoch+1}/{args.epochs}] valid_recall: {valid_recall:.5} valid_wrecall: {valid_wrecall:.5} valid_precall: {valid_precall:.5}')
 
         train_acc_list.append(train_accuracy)
         train_loss_list.append(train_loss)
