@@ -75,6 +75,7 @@ def get_score(outputs):
     preds = p * torch.Tensor([0, 1, 2, 3, 4])
     return torch.sum(preds, dim=-1)
 
+# criterion에 들어가는 값들을 그대로 넣으시면 됩니다.
 def MAE(outputs, labels):
     scores = get_score(outputs)
     mae = torch.abs(preds - labels)
