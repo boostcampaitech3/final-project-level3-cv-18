@@ -44,7 +44,8 @@ async def get_gradcam(files: List[UploadFile] = File(...)):
     return {'cam':cam_image.tolist(),'label':label}
 
 def main():
-    uvicorn.run(app,host='0.0.0.0',port=8000)
+    uvicorn.run(app, host="172.17.0.2", port=30002)
+
 
 if __name__ == '__main__':
     model_path = '/opt/ml/input/artlab/models/latest.pt'

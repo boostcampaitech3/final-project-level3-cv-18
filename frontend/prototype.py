@@ -26,7 +26,7 @@ if img_file :
             ('files', (img_file.name, image_bytes,
                        img_file.type))
         ]
-        cam_response = requests.post("http://localhost:8000/gradcam", files=files)
+        cam_response = requests.post("http://101.101.217.13:30002/gradcam", files=files)
         cam_result = (np.array(cam_response.json()['cam']))
         label = cam_response.json()['label']
         st.image(cam_result,caption=f"label : {label}")
