@@ -1,6 +1,4 @@
 import cv2
-from PIL import Image
-import os
 
 
 def crop(path):
@@ -25,7 +23,9 @@ def crop(path):
     # Draw rectangle around the faces and crop the faces
     for (x, y, w, h) in faces:
         #rectangle = cv2.rectangle(img, (x, y), (x+w, y+h), (0, 0, 0), 0)
-        faces = img[y:int(y+h*1.1),x:x+w]
-    
-    
+        faces = img[int(y*0.8):int(y+h*1.1),x:int(x+w*0.95)]
+        forhead = img[int(y*0.9):int(y+h*0.3),x:int(x+w*0.95)]
+        nose = img[int(y+h*0.4):int(y+h*0.75),x:int(x+w*0.95)]
+        chin = img[int(y+h*0.65):int(y+h*1.1),x:int(x+w*0.95)]
+        
     return faces

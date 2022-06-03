@@ -14,6 +14,7 @@ img_file = st.camera_input('')
 
 global crop_img
 
+
 if img_file : 
     image_bytes = img_file.getvalue()
     img =Image.open(io.BytesIO(image_bytes))
@@ -24,14 +25,24 @@ if img_file :
         crop_img = cv2.cvtColor(crop(new_img),cv2.COLOR_BGR2RGB)
         files = [
             ('files', (img_file.name, image_bytes,
-                       img_file.type))
+                    img_file.type))
         ]
         cam_response = requests.post("http://101.101.217.13:30002/gradcam", files=files)
         cam_result = (np.array(cam_response.json()['cam']))
         label = cam_response.json()['label']
-        st.image(cam_result,caption=f"label : {label}")
+        col1,col2,col3,col4,col5 = st.columns(5)
+        with col1:
+            st.image(cam_result[0],caption=f"label(wrinkle) : {label[0]}")
+        with col2:
+            st.image(cam_result[1],caption=f"label(oil) : {label[1]}")
+        with col3:
+            st.image(cam_result[2],caption=f"label(sensitive) : {label[2]}")
+        with col4:
+            st.image(cam_result[3],caption=f"label(pigmentation) : {label[3]}")
+        with col5:
+            st.image(cam_result[4],caption=f"label(hydration) : {label[4]}")
     except:
-        st.write('사진을 다시 찍어주세요.')
+        st.warning('사진을 다시 찍어주세요.')
 
 
 
