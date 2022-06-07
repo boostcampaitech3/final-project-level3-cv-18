@@ -37,10 +37,10 @@ class FeatureExtractor():
         return outputs, x
 
 def preprocess_image(img):
-    # means = [0.485, 0.456, 0.406]
-    # stds = [0.229, 0.224, 0.225]
-    means = [0.5, 0.5, 0.5]
-    stds = [0.2, 0.2, 0.2]
+    means = [0.485, 0.456, 0.406]
+    stds = [0.229, 0.224, 0.225]
+    #means = [0.5, 0.5, 0.5]
+    #stds = [0.2, 0.2, 0.2]
 
     preprocessed_img = img.copy()[:, :, ::-1]
     for i in range(3):
@@ -59,9 +59,9 @@ def show_cams(img, mask_dic):
         show_cam_on_image(img, mask, name)
     
 def show_cam_on_image(img, mask, name):
-    heatmap = cv2.applyColorMap(np.uint8(255 * mask), cv2.COLORMAP_JET)
+    heatmap = cv2.applyColorMap(np.uint8(255 * mask),cv2.COLORMAP_JET)
     heatmap = np.float32(heatmap) / 255
-    cam = heatmap + np.float32(img)
+    cam = 0.3*heatmap + np.float32(img)
     cam = cam / np.max(cam)
     # cv2.imwrite(f"./{file_name}_{name}.jpg", np.uint8(255 * cam))
     return np.uint8(255 * cam)
