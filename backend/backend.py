@@ -13,6 +13,20 @@ import time
 
 app = FastAPI()
 
+model_path = ['/opt/ml/input/artlab/models/wrinkle_best_precall.pth','/opt/ml/input/artlab/models/oil.pth','/opt/ml/input/artlab/models/sensitive (1).pth','/opt/ml/input/artlab/results/b0_pigmentation_softlabel_best.pt','/opt/ml/input/artlab/results/hydration_best_precall_model.pth']
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model0 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+model0.load_state_dict(torch.load(model_path[0],map_location=device))
+model1 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+model1.load_state_dict(torch.load(model_path[1],map_location=device))
+model2 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+model2.load_state_dict(torch.load(model_path[2],map_location=device))
+model3 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+model3.load_state_dict(torch.load(model_path[3],map_location=device))
+model4 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+model4.load_state_dict(torch.load(model_path[4],map_location=device))
+
+
 @app.post('/gradcam')
 async def get_gradcam(files: List[UploadFile] = File(...)):
     global model0,model1,model2,model3,model4,model_path,device
@@ -52,17 +66,14 @@ async def get_gradcam(files: List[UploadFile] = File(...)):
         for k,v in mask_dic.items():
             gray_mask=v
             name=k
-        cam_image = show_cam_on_image(rgb_img, 1-(np.where(gray_mask<0.6,gray_mask,1)), name)
+        cam_image = show_cam_on_image(rgb_img, 1-gray_mask, name)
         cam_list.append(cam_image.tolist())
     end = time.time()
     print(end-start)
     return {'cam':cam_list,'label':label_list}
 
 def main():
-    uvicorn.run(app, host="172.17.0.2", port=30002)
-
-if __name__ == '__main__':
-    model_path = ['/opt/ml/input/artlab/models/wrinkle_best_model.pth','/opt/ml/input/artlab/models/oil_model.pth','/opt/ml/input/artlab/models/sensitive.pth','/opt/ml/input/artlab/models/b0_soft_mse_0.9_equal_mixup_24.pt','/opt/ml/input/artlab/models/hydration_best_acc_model.pth']
+    model_path = ['/opt/ml/input/artlab/results/wrinkle_best_model (1) (1).pth','/opt/ml/input/artlab/models/oil.pth','/opt/ml/input/artlab/models/sensitive (1).pth','/opt/ml/input/artlab/results/b0_pigmentation_softlabel_best.pt','/opt/ml/input/artlab/results/hydration_best_precall_model.pth']
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model0 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
     model0.load_state_dict(torch.load(model_path[0],map_location=device))
@@ -74,6 +85,21 @@ if __name__ == '__main__':
     model3.load_state_dict(torch.load(model_path[3],map_location=device))
     model4 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
     model4.load_state_dict(torch.load(model_path[4],map_location=device))
-    main()
+#    uvicorn.run(app, host="172.17.0.2", port=30002, workers=5)
+
+if __name__ == '__main__':
+    model_path = ['/opt/ml/input/artlab/results/wrinkle_best_model (1) (1).pth','/opt/ml/input/artlab/models/oil.pth','/opt/ml/input/artlab/models/sensitive (1).pth','/opt/ml/input/artlab/results/b0_pigmentation_softlabel_best.pt','/opt/ml/input/artlab/results/hydration_best_precall_model.pth']
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model0 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+    model0.load_state_dict(torch.load(model_path[0],map_location=device))
+    model1 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+    model1.load_state_dict(torch.load(model_path[1],map_location=device))
+    model2 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+    model2.load_state_dict(torch.load(model_path[2],map_location=device))
+    model3 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+    model3.load_state_dict(torch.load(model_path[3],map_location=device))
+    model4 = EfficientNet.from_pretrained('efficientnet-b0',num_classes=5).to(device)
+    model4.load_state_dict(torch.load(model_path[4],map_location=device))
+    #main()
 
 
