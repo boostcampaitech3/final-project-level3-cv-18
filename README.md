@@ -58,7 +58,7 @@
 
 ## 🗂️Dataset
 
-- 피부를 유분, 수분, 주름, 색소, 민감도 5가지 항목으로 나누고, 정도에 따라 0부터 4까지 평가한 피부 데이터![data](.\readme_file\data.jpg)
+- 피부를 유분, 수분, 주름, 색소, 민감도 5가지 항목으로 나누고, 정도에 따라 0부터 4까지 평가한 피부 데이터<img src=".\readme_file\data.jpg" alt="data" style="zoom: 80%;" />
 - 각 항목의 일부 라벨이 매우 부족한 imbalance data
 - 보안 규정 상 피부 이미지, 데이터 수, 라벨링 기준 등은 공개 불가
 
@@ -66,14 +66,14 @@
 
 - Penalty Recall
 
-<img src="C:.\readme_file\precall.jpg" alt="precall" style="zoom:80%;" />
+<img src="C:.\readme_file\precall.jpg" alt="precall" style="zoom: 67%;" />
 
 - Ordinal data이기 때문에 정답만 맞추는 것 뿐 아니라 정답과 얼마나 비슷하게 예측했는지도 중요함
 - 정답과 인접한 라벨로 예측하면 일정 가중치를 부여한 정답으로 인정하고, 정답과 먼 라벨로 예측하면 패널티를 주어 recall을 계산
 
 ## 🧱Structure
 
-![structure](.\readme_file\structure.jpg)
+<img src=".\readme_file\structure.jpg" alt="structure" style="zoom:50%;" />
 
 * Frontend
   * User의 ID와 password를 입력하면 개인 피부 사진을 업로드할 수 있음
@@ -117,7 +117,7 @@
 
 - Imbalanced Data Sampler
 
-  ![sampler](.\readme_file\sampler.jpg)
+  <img src=".\readme_file\sampler.jpg" alt="sampler" style="zoom:80%;" />
 
   비율이 높은 라벨은 undersampling, 비율이 낮은 라벨은 oversampling하여 학습
 
@@ -164,7 +164,7 @@
 
 - baseline -> 최종 모델
 
-![result2](.\readme_file\result2.jpg)
+<img src=".\readme_file\result2.jpg" alt="result2" style="zoom:67%;" />
 
 - 시연 영상
 
