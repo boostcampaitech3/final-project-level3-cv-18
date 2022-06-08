@@ -121,10 +121,10 @@
 
   비율이 높은 라벨은 undersampling, 비율이 낮은 라벨은 oversampling하여 학습
 
-  |      | Oil                                    | Wrinkle                                | Sensitive                              | Pigmentation | Hydration |
-  | ---- | -------------------------------------- | -------------------------------------- | -------------------------------------- | ------------ | --------- |
-  |      | 0.5879                                 | 0.4113                                 | 0.456                                  | 0.6934       | 0.4902    |
-  |      | <span style="color:blue">0.6207</span> | <span style="color:blue">0.4177</span> | <span style="color:blue">0.5551</span> | 0.6856       | 0.4701    |
+  |      | Oil                                             | Wrinkle                                         | Sensitive                                       | Pigmentation | Hydration |
+  | ---- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- | ------------ | --------- |
+  |      | 0.5879                                          | 0.4113                                          | 0.456                                           | 0.6934       | 0.4902    |
+  |      | &#x1F539;<span style="color:blue">0.6207</span> | &#x1F539;<span style="color:blue">0.4177</span> | &#x1F539;<span style="color:blue">0.5551</span> | 0.6856       | 0.4701    |
 
   Oil,Wrinkle,Sensitive의 경우 P-Recall이 증가
 
@@ -134,22 +134,22 @@
 
 - Augmentation
 
-  |                              | Oil                                    | Wrinkle                                | Sensitive                              | Pigmentation                           | Hydration                              |
-  | ---------------------------- | -------------------------------------- | -------------------------------------- | -------------------------------------- | -------------------------------------- | -------------------------------------- |
-  | Resize(512,512)(Baseline)    | 0.5879                                 | 0.4113                                 | 0.2158                                 | 0.6934                                 | 0.4908                                 |
-  | Resize(1024,1024)            | 0.7552                                 | 0.3800                                 | <span style="color:blue">0.6682</span> | <span style="color:blue">0.8018</span> | 0.2022                                 |
-  | CenterCrop(512,512)          | 0.6286                                 | 0.2765                                 | 0.2557                                 | 0.6671                                 | 0.4686                                 |
-  | RandomCrop(512,512)          | 0.7516                                 | <span style="color:blue">0.4480</span> | 0.4257                                 | <span style="color:blue">0.7460</span> | 0.4745                                 |
-  | RandomResizedCrop(512,512)   | 0.6580                                 | 0.3283                                 | 0.2549                                 | 0.7324                                 | <span style="color:blue">0.5125</span> |
-  | RandomResizedCrop(1024,1024) | <span style="color:blue">0.7631</span> | 0.4213                                 | 0.6149                                 | 0.7803                                 | 0.2181                                 |
+  |                              | Oil                                             | Wrinkle                                         | Sensitive                                       | Pigmentation                                    | Hydration                                       |
+  | ---------------------------- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
+  | Resize(512,512)(Baseline)    | 0.5879                                          | 0.4113                                          | 0.2158                                          | 0.6934                                          | 0.4908                                          |
+  | Resize(1024,1024)            | 0.7552                                          | 0.3800                                          | <span style="color:blue">&#x1F539;0.6682</span> | &#x1F539;<span style="color:blue">0.8018</span> | 0.2022                                          |
+  | CenterCrop(512,512)          | 0.6286                                          | 0.2765                                          | 0.2557                                          | 0.6671                                          | 0.4686                                          |
+  | RandomCrop(512,512)          | 0.7516                                          | <span style="color:blue">&#x1F539;0.4480</span> | 0.4257                                          | <span style="color:blue">&#x1F539;0.7460</span> | 0.4745                                          |
+  | RandomResizedCrop(512,512)   | 0.6580                                          | 0.3283                                          | 0.2549                                          | 0.7324                                          | <span style="color:blue">&#x1F539;0.5125</span> |
+  | RandomResizedCrop(1024,1024) | <span style="color:blue">&#x1F539;0.7631</span> | 0.4213                                          | 0.6149                                          | 0.7803                                          | 0.2181                                          |
 
-  |                   | Oil                                    | Wrinkle | Sensitive                              | Pigmentation                           | Hydration                              |
-  | ----------------- | -------------------------------------- | ------- | -------------------------------------- | -------------------------------------- | -------------------------------------- |
-  | RGBShift          | <span style="color:blue">0.6197</span> | 0.3171  | 0.2142                                 | <span style="color:blue">0.7078</span> | <span style="color:blue">0.5035</span> |
-  | ISONoise          | <span style="color:blue">0.6416</span> | 0.3524  | <span style="color:blue">0.2517</span> | 0.6920                                 | 0.4390                                 |
-  | OpticalDistortion | <span style="color:blue">0.6441</span> | 0.3613  | 0.2081                                 | <span style="color:blue">0.7151</span> | 0.4653                                 |
-  | RandomBrightness  | <span style="color:blue">0.6115</span> | 0.3696  | 0.2114                                 | 0.6904                                 | 0.4637                                 |
-  | HorizontalFlip    | <span style="color:blue">0.6516</span> | 0.3642  | <span style="color:blue">0.2199</span> | 0.6768                                 | 0.3491                                 |
+  |                   | Oil                                             | Wrinkle | Sensitive                                       | Pigmentation                                    | Hydration                                       |
+  | ----------------- | ----------------------------------------------- | ------- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
+  | RGBShift          | &#x1F539;<span style="color:blue">0.6197</span> | 0.3171  | 0.2142                                          | <span style="color:blue">&#x1F539;0.7078</span> | <span style="color:blue">&#x1F539;0.5035</span> |
+  | ISONoise          | <span style="color:blue">&#x1F539;0.6416</span> | 0.3524  | &#x1F539;<span style="color:blue">0.2517</span> | 0.6920                                          | 0.4390                                          |
+  | OpticalDistortion | <span style="color:blue">&#x1F539;0.6441</span> | 0.3613  | 0.2081                                          | <span style="color:blue">&#x1F539;0.7151</span> | 0.4653                                          |
+  | RandomBrightness  | <span style="color:blue">&#x1F539;0.6115</span> | 0.3696  | 0.2114                                          | 0.6904                                          | 0.4637                                          |
+  | HorizontalFlip    | &#x1F539;<span style="color:blue">0.6516</span> | 0.3642  | <span style="color:blue">&#x1F539;0.2199</span> | 0.6768                                          | 0.3491                                          |
 
   Augmentation 실험은 다음 두 가지 관점에서 진행
 
