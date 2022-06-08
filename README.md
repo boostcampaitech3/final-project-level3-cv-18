@@ -66,7 +66,7 @@
 
 - Penalty Recall
 
-<img src="C:.\readme_file\precall.jpg" alt="precall" style="zoom: 67%;" />
+<img src=".\readme_file\precall.jpg" alt="precall" style="zoom: 87%;" />
 
 - Ordinal data이기 때문에 정답만 맞추는 것 뿐 아니라 정답과 얼마나 비슷하게 예측했는지도 중요함
 - 정답과 인접한 라벨로 예측하면 일정 가중치를 부여한 정답으로 인정하고, 정답과 먼 라벨로 예측하면 패널티를 주어 recall을 계산
