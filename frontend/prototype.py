@@ -186,7 +186,9 @@ elif choice == "SignUp":
             add_userdata(new_user,make_hashes(new_password))
             c.close()
             st.success("계정 생성에 성공하셨습니다.")
+            st.balloons()
             st.info("왼쪽 로그인 메뉴를 통해 로그인해주세요.")
+
 
 
 
