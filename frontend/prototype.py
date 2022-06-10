@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import pandas as pd
 import requests
-from image_crop import crop
+from backend.image_crop import crop
 import datetime
 from dateutil.tz import gettz
 import time
