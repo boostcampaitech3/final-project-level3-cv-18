@@ -30,7 +30,7 @@ from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_sc
 from torch.utils.tensorboard import SummaryWriter
 from loss import create_criterion, eval_criterion
 from utils import Metric
-
+import torch.nn.functional as F
 
 def seed_everything(seed):
     torch.manual_seed(seed)
@@ -214,6 +214,12 @@ def train(data_dir, model_dir, valid_dir, args):
 
 
     best_acc = 0
+    soft_mse_labels=[torch.tensor([[0.95, 0.05, 0, 0, 0]]),
+        torch.tensor([[0.05, 0.9, 0.05, 0, 0]]),
+        torch.tensor([[0, 0.05, 0.9, 0.05, 0]]),
+        torch.tensor([[0, 0, 0.05, 0.9, 0.05]]),
+        torch.tensor([[0, 0, 0, 0.05, 0.95]]),
+        ]
     for epoch in range(args.epochs):                                    # args.epochs 값 만큼 epoch 실행한다.
         model.train()                                                     # model 학습 모드로 변경한다.
         train_accuracy = 0                                                # 해당 epoch의 accuracy와 loss를 저장할 변수 선언한다.
@@ -223,9 +229,22 @@ def train(data_dir, model_dir, valid_dir, args):
         for images, labels in tqdm(train_loader):   
             images = images.to(device)
             labels = labels.to(device)
+            hypothesis = model(images)               
 
-            hypothesis = model(images)                                      
+            '''
+             loss : 'cross_entropy','focal','label_smoothing' 'f1', 'CB' 
+            '''              
             loss = criterion(hypothesis, labels)                            
+
+            '''
+            loss : 'softmax_ce'
+            '''
+            # mse_hypothesis = F.softmax(hypothesis, dim=1)
+            # mse_labels=torch.tensor([])
+            # for i in labels:
+            #     mse_labels = torch.cat((mse_labels,soft_mse_labels[int(i)].clone().detach()),0)
+            # mse_labels = mse_labels.to(device)
+            # loss = criterion(mse_hypothesis, mse_labels) 
 
             optimizer.zero_grad()
             loss.backward()
@@ -267,9 +286,23 @@ def train(data_dir, model_dir, valid_dir, args):
             for images, labels in tqdm(valid_loader):
                 images = images.to(device)
                 labels = labels.to(device)
-
                 prediction = model(images)
+                
+                '''
+                loss : 'cross_entropy','focal','label_smoothing' 'f1', 'CB' 
+                '''              
                 loss = criterion(prediction, labels)
+                      
+                '''
+                loss : 'softmax_ce'
+                '''
+                # mse_prediction = F.softmax(prediction, dim=1)
+                # mse_labels=torch.tensor([])
+                # for i in labels:
+                #     mse_labels = torch.cat((mse_labels,soft_mse_labels[int(i)].clone().detach()),0)
+                # mse_labels = mse_labels.to(device)
+                # loss = criterion(mse_prediction, mse_labels) 
+
                 correct = (torch.argmax(prediction, 1) == labels)
                 val_accuracy += correct.sum().item() / total_val_image
                 val_loss += loss.item() / total_val_batch
