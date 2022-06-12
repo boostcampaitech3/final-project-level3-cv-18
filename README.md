@@ -123,7 +123,7 @@
 
 ## 👨‍🏫평가 Metric
 
-- Penalty Recall
+- Penalty Recall(P-Recall)
 
 <img src=".\readme_file\precall.jpg" alt="precall" style="zoom: 67%;" />
 
@@ -135,7 +135,7 @@
 
 ## 🧪Experiments
 
-- Model
+- Model(P-Recall)
 
   |                  | Parameters | Metric           | Training Time |
   | ---------------- | ---------- | ---------------- | ------------- |
@@ -147,7 +147,7 @@
 
   서비스를 하기 위해 모델의 성능 뿐 아니라 속도와 크기도 고려하여 EfficientNet-B0로 최종 결정
 
-- Loss
+- Loss(P-Recall)
 
   |      | Cross Entropy                        | label Smoothing CE                                       | Focal                                                        | Class Balanced Softmax CE                                | Class Balanced Focal                                     |
   | ---- | ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------------- |
@@ -163,7 +163,7 @@
 
   각 항목 별 가장 높은 P-Recall을 달성한 loss fuction을 사용
 
-* Masked Label Smoothing
+* Masked Label Smoothing(P-Recall)
 
   * 다른 라벨과의 score 격차를 줄여주는 Label Smoothing의 특성을 적용하여, 인접한 라벨에만 확률을 배분
 
@@ -175,7 +175,7 @@
 
 <img src=".\readme_file\msl_wrinkle.jpg" alt="msl_wrinkle" style="zoom:50%;" />
 
-- Imbalanced Data Sampler
+- Imbalanced Data Sampler(P-Recall)
 
   <img src=".\readme_file\sampler.jpg" alt="sampler" style="zoom:80%;" />
 
@@ -192,7 +192,7 @@
 
   </span>
 
-- Augmentation
+- Augmentation(P-Recall)
 
   |                              | Oil                                             | Wrinkle                                         | Sensitive                                       | Pigmentation                                    | Hydration                                       |
   | ---------------------------- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
@@ -222,7 +222,7 @@
 
 ## 🏆Result
 
-- 최종 결과
+- 최종 결과(P-Recall)
 
   - 각 항목별로 P-Recall에 영향을 주었던 기법들을 모두 적용하여 최종 모델 학습
 
