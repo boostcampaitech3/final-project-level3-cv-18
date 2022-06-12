@@ -200,10 +200,6 @@ def previous_page():
 def user_update(name):
     st.session_state.username = name
 
-def select_sigup():
-    st.session_state.form = 'signup_form'
-
-
 
 st.sidebar.image('/opt/ml/input/artlab/backend/logo/artlab.png')
 with st.sidebar:
