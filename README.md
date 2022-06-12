@@ -75,28 +75,28 @@
 
 ## 🧱Structure
 
-├── backend
-│  ├──backend.py
-│  ├── fast.py
-│  ├── fast1.py
-│  ├── grad_cam.py
-│  ├── image_crop.py
-│  └── prediction.py
-│ 
-├── baseline
-│  ├── dataset.py
-│  ├── evaluation.py
-│  ├── loss.py
-│  ├── model.py
-│  ├── train.py
-│ └── utils.py
-│ 
-├── EDA
-│  └── EDA.ipynb
-│ 
-└── frontend
-    ├── logo
-   └── prototype.py 
+├── backend     
+│  ├──backend.py      
+│  ├── fast.py      
+│  ├── fast1.py     
+│  ├── grad_cam.py      
+│  ├── image_crop.py      
+│  └── prediction.py      
+│       
+├── baseline      
+│  ├── dataset.py     
+│  ├── evaluation.py      
+│  ├── loss.py      
+│  ├── model.py     
+│  ├── train.py     
+│ └── utils.py      
+│       
+├── EDA     
+│  └── EDA.ipynb      
+│       
+└── frontend      
+    ├── logo          
+   └── prototype.py       
 
 
 
