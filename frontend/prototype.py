@@ -5,17 +5,20 @@ import numpy as np
 import cv2
 import pandas as pd
 import requests
-from backend.image_crop import crop
+from image_crop import crop
 import datetime
 from dateutil.tz import gettz
 import time
 from streamlit_option_menu import option_menu
 from concurrent.futures import ThreadPoolExecutor
 
+
+st.set_page_config(page_title = 'ARTLAB 피부평가',layout="wide")
+
 def post_url(args):
     return requests.post(args[0],files=args[1])
 
-st.set_page_config(page_title = 'ARTLAB 피부평가',layout="wide")
+
 
 import hashlib
 def make_hashes(password):
@@ -121,7 +124,7 @@ def image_upload():
                 with col5:
                     st.image(hyd_result,caption=f"수분 : {hydration}")
                 end = time.time()
-                #st.write(end-start)
+                st.write(end-start)
         except:
             st.warning('사진을 다시 찍어주세요.')
 
@@ -184,7 +187,7 @@ def camera_input():
                 with col5:
                     st.image(hyd_result,caption=f"수분 : {hydration}")
                 end = time.time()
-                #st.write(end-start)
+                st.write(end-start)
         except:
             st.warning('사진을 다시 찍어주세요.')
 
@@ -194,37 +197,56 @@ def next_page():
 def previous_page():
     st.session_state.page-=1
 
+def user_update(name):
+    st.session_state.username = name
 
-st.sidebar.image('./logo/artlab.png')
+def select_sigup():
+    st.session_state.form = 'signup_form'
+
+
+
+st.sidebar.image('/opt/ml/input/artlab/backend/logo/artlab.png')
 with st.sidebar:
     choice = option_menu('Main menu',['Home','로그인','회원가입'],
     icons = ['box-arrow-in-left','gear'],menu_icon='menu-button',default_index=0)
     choice
 
 
+
+
 if choice == "로그인":
     st.subheader("로그인 상태")
 
-    username = st.sidebar.text_input("User Name")
-    password = st.sidebar.text_input("Password",type='password')
+    username = st.text_input("User Name")
+    password = st.text_input("Password",type='password')
 
-    if st.sidebar.checkbox("Login"):
+    if 'username' not in st.session_state:
+        st.session_state.username = ''
+    user_update(username)
+
+    if st.button("로그인"):
         create_usertable()
         create_userinfo()
         hashed_pswd = make_hashes(password)
 
         result = login_user(username,check_hashes(password,hashed_pswd))
-        if result:
 
-            st.success("{}님 환영합니다.".format(username))
+        if result and st.session_state.username!='':
 
-            task = st.selectbox("Task",["분석","기록"])
+            st.sidebar.success("{}님 환영합니다.".format(username))
+            logout = st.sidebar.button('로그아웃')
+            if logout:
+                user_update('')
+                choice = 'Home'
+                st.write(choice)
+            st.subheader('수행하실 작업을 선택해주세요.')
+            task = st.selectbox("",["분석","기록"])
 
             if task == "분석":
                 st.subheader('피부 평가')
                 with st.sidebar:
                     select_method = option_menu('분석방법',['사진 촬영','저장된 사진 업로드'],
-                    icons = ['box-arrow-in-left','gear'],menu_icon='menu-button',default_index=0)
+                    icons = ['camera-fill','upload'],menu_icon='menu-button',default_index=0)
                     select_method
                 if select_method == '사진 촬영':
                     st.markdown('### 사진을 촬영하여 피부를 검사하는 방법입니다.')
@@ -237,7 +259,6 @@ if choice == "로그인":
             elif task == "기록":
                 st.subheader("평가 기록")
                 st.markdown("## 사용자의 피부 진단 기록을 확인할 수 있는 공간입니다.")
-                st.write('0 : 매우적음, 4 : 매우 많음')
                 user_result = view_skin_analysis(username)
                 c.close()
                 clean_db = pd.DataFrame(user_result,columns=['날짜','주름','유분','민감도','색조','수분']).set_index('날짜')
@@ -245,7 +266,15 @@ if choice == "로그인":
                 maximum = len(clean_db)
                 if 'page' not in st.session_state:
                     st.session_state.page = 0
+
+                start_idx = 10*st.session_state.page
+                end_idx = start_idx+10
+                st.write("")
+                st.write(clean_db.iloc[start_idx:end_idx])
+
                 co1,co2,co3,_ = st.columns([0.1, 0.17, 0.1, 0.8])
+
+                co2.write(f"Page of {1+st.session_state.page} of {round(maximum/10)+1}")
 
                 if st.session_state.page < round(maximum/10):
                     co3.button(">",on_click=next_page)
@@ -256,12 +285,8 @@ if choice == "로그인":
                     co1.button("<",on_click=previous_page)
                 else:
                     co1.write("")
+            
                 
-                co2.write(f"Page of {1+st.session_state.page} of {round(maximum/10)+1}")
-                start_idx = 10*st.session_state.page
-                end_idx = start_idx+10
-                st.write("")
-                st.write(clean_db.iloc[start_idx:end_idx])
                 with st.expander("그래프로 확인하기"):
                     clean_db = clean_db.iloc[start_idx:end_idx]
                     options = st.multiselect(
@@ -288,15 +313,14 @@ elif choice == "회원가입":
         else:
             add_userdata(new_user,make_hashes(new_password))
             c.close()
-            st.balloons()
             st.success("계정 생성에 성공하셨습니다.")
             st.info("왼쪽 로그인 메뉴를 통해 로그인해주세요.")
 
 elif choice == 'Home':
-    st.image('./logo/h_logo1.png',use_column_width='always')
+    st.image('/opt/ml/input/artlab/backend/logo/h_logo.png',use_column_width='always')
     st.title('ARTLAB 기업연계 프로젝트입니다.')
     st.markdown('### 사진을 찍거나 업로드하여 5개의 항목에 대해 평가하는 서비스입니다.')
-    st.image('./logo/ex.png',use_column_width='always')
+    st.image('/opt/ml/input/artlab/backend/logo/example.png',use_column_width='always')
     st.markdown('### 사진을 찍거나 업로드하시면 각각의 항목에 대해 점수와 함께 grad-cam 결과를 얻습니다.')
     st.markdown('### 또한 저희 데모버전은 사용자 별 진단 기록을 저장하여 시각화하는 과정을 포함하고 있습니다.')
 
