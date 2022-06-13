@@ -205,11 +205,11 @@
 
   |                   | Oil                                             | Wrinkle | Sensitive                                       | Pigmentation                                    | Hydration                                       |
   | ----------------- | ----------------------------------------------- | ------- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
-  | RGBShift          | &#x1F539;<span style="color:blue">0.6197</span> | 0.4037  | <span style="color:blue">&#x1F539;0.2801</span>                                          | <span style="color:blue">&#x1F539;0.7078</span> | <span style="color:blue">&#x1F539;0.5035</span> |
-  | ISONoise          | <span style="color:blue">&#x1F539;0.6416</span> | 0.3651  | &#x1F539;<span style="color:blue">0.4452</span> | 0.6920                                          | 0.4390                                          |
-  | OpticalDistortion | <span style="color:blue">&#x1F539;0.6441</span> | 0.3613  | <span style="color:blue">&#x1F539;0.3407</span>                                           | <span style="color:blue">&#x1F539;0.7151</span> | 0.4653                                          |
-  | RandomBrightness  | <span style="color:blue">&#x1F539;0.6115</span> | <span style="color:blue">&#x1F539;0.4175</span>   | 0.2681                                          | 0.6904                                          | 0.4637                                          |
-  | HorizontalFlip    | &#x1F539;<span style="color:blue">0.6516</span> | 0.3642  | <span style="color:blue">&#x1F539;0.2733</span> | 0.6768                                          | 0.3491                                          |
+  | RGBShift          | &#x1F539;<span style="color:blue">0.6197</span> | 0.4037  | <span style="color:blue">&#x1F539;0.2801</span>                                          | <span style="color:blue">&#x1F539;0.7078</span> | <span style="color:blue">&#x1F539;0.5385</span> |
+  | ISONoise          | <span style="color:blue">&#x1F539;0.6416</span> | 0.3651  | &#x1F539;<span style="color:blue">0.4452</span> | 0.6920                                          | <span style="color:blue">&#x1F539;0.5035                                          |
+  | OpticalDistortion | <span style="color:blue">&#x1F539;0.6441</span> | 0.3613  | <span style="color:blue">&#x1F539;0.3407</span>                                           | <span style="color:blue">&#x1F539;0.7151</span> | 0.4390                                          |
+  | RandomBrightness  | <span style="color:blue">&#x1F539;0.6115</span> | <span style="color:blue">&#x1F539;0.4175</span>   | 0.2681                                          | 0.6904                                          | 0.4653                                          |
+  | HorizontalFlip    | &#x1F539;<span style="color:blue">0.6516</span> | 0.3642  | <span style="color:blue">&#x1F539;0.2733</span> | 0.6768                                          | 0.4637                                          |
 
   Augmentation 실험은 다음 두 가지 관점에서 진행
 
