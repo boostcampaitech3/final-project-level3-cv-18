@@ -149,7 +149,7 @@
 
 - Loss(P-Recall)
 
-  |      | Cross Entropy                        | label Smoothing CE                                       | Focal                                                        | Class Balanced Softmax CE                                | Class Balanced Focal                                     |
+  |      | Cross Entropy                        | label Smoothing CE                                       | Focal                                                        | Class Balanced Softmax CE*                                | Class Balanced Focal*                                     |
   | ---- | ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------------- |
   | 설명 | 다중 분류를 위한 손실 함수(Baseline) | Soft target으로 바꾸어 정답과 오답간의 score 격차를 줄임 | 어렵거나 쉽게 오분류되는 케이스에 더 큰 가중치를 주어 불균형 문제를 개선 | 새로운 케이스를 학습할 때 가중치를 주어 불균형 문제 개선 | 새로운 케이스를 학습할 때 가중치를 주어 불균형 문제 개선 |
 
@@ -158,12 +158,16 @@
   | Baseline (Cross Entropy)  | 0.7501  | 0.456     | 0.3425  | 0.687        | 0.4726    |
   | Label Smoothing CE (0.1)  | 0.755   | 0.3545    | 🔹0.4113 | 🔹0.6934      | 🔹0.4908   |
   | Focal                     | 0.7627  | 0.3894    | 0.3356  | 0.682        | 0.4823    |
-  | Class Balanced Softmax CE | 🔹0.7246 | 0.5706    | 0.3618  | 0.6742       | 0.4598    |
-  | Class Balanced Focal      | 0.746   | 🔹0.5894   | 0.3708  | 0.6522       | 0.4617    |
+  | Class Balanced Softmax CE* | 🔹0.7246 | 0.5706    | 0.3618  | 0.6742       | 0.4598    |
+  | Class Balanced Focal*      | 0.746   | 🔹0.5894   | 0.3708  | 0.6522       | 0.4617    |
+
+>  *https://arxiv.org/abs/1901.05555
 
   각 항목 별 가장 높은 P-Recall을 달성한 loss fuction을 사용
 
 * Masked Label Smoothing(P-Recall)
+
+>  https://arxiv.org/abs/2203.02889
 
   * 다른 라벨과의 score 격차를 줄여주는 Label Smoothing의 특성을 적용하여, 인접한 라벨에만 확률을 배분
 
@@ -176,6 +180,8 @@
 <img src=".\readme_file\msl_wrinkle.jpg" alt="msl_wrinkle" style="zoom:50%;" />
 
 - Imbalanced Data Sampler(P-Recall)
+
+>  https://github.com/ufoym/imbalanced-dataset-sampler
 
   <img src=".\readme_file\sampler.jpg" alt="sampler" style="zoom:80%;" />
 
