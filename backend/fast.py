@@ -2,7 +2,6 @@ from fastapi import FastAPI, File, UploadFile
 from prediction import predict
 import uvicorn
 import numpy as np
-from typing import List
 import cv2
 from image_crop import crop
 from grad_cam import GradCam,show_cam_on_image,preprocess_image
@@ -10,23 +9,21 @@ from efficientnet_pytorch import EfficientNet
 from fastapi import FastAPI
 import torch
 import time
-from starlette.responses import Response
 
 app = FastAPI()
 
 
 @app.post('/gradcam')
-async def get_gradcam(files: List[UploadFile] = File(...)):
+async def get_gradcam(files: UploadFile = File(...)):
     global model
-    image_bytes = await files[0].read()
-    encoded_img = np.frombuffer(image_bytes,dtype=np.uint8)
+    image_bytes = await files.read() # file 읽어오기
+    encoded_img = np.frombuffer(image_bytes,dtype=np.uint8) # image crop 하기 위한 과정
     new_img = cv2.imdecode(encoded_img,cv2.IMREAD_COLOR)
 
     crop_img = crop(new_img)
-    start= time.time()
-    label = predict(model=model,img=crop_img)
+    label = predict(model=model,img=crop_img) # label 값
 
-    rgb_img=cv2.cvtColor(crop_img, cv2.COLOR_RGB2BGR)
+    rgb_img=cv2.cvtColor(crop_img, cv2.COLOR_RGB2BGR) # grad-cam 출력 과정
     rgb_img = np.float32(rgb_img) / 255
 
     cam_img = preprocess_image(rgb_img)
@@ -43,8 +40,6 @@ async def get_gradcam(files: List[UploadFile] = File(...)):
     cam_image = show_cam_on_image(rgb_img, 1-gray_mask, name)
     cam_list = cam_image.tolist()
     #cam_list.append(cam_image.tolist())
-    end = time.time()
-    print(end-start)
     return {'cam':cam_list,'label':label}
 
 
