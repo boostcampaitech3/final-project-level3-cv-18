@@ -250,4 +250,4 @@
 https://www.youtube.com/watch?v=nDWqPPHq6UQ
  
 - 데모 사이트  
-  https://share.streamlit.io/kimkihoon0515/streamlit_demo/prototype.py
+https://share.streamlit.io/kimkihoon0515/streamlit_demo/prototype.py
